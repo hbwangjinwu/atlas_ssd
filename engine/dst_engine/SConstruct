@@ -1,0 +1,40 @@
+import copy
+import os
+
+ddk_home = '/home/ubuntu/hiai-studio-rt/tools/che/ddk/ddk/'
+
+inc_path = [
+    ddk_home +'include/inc',
+    ddk_home +'include/third_party/protobuf/include',
+    ddk_home +'include/third_party/cereal/include',
+    ddk_home +'include/libc_sec/include',
+    '../../inc'
+]
+
+
+lib_path = [
+   ddk_home + '/lib/x86_64-linux-gnu' ,
+]
+
+libs = [
+    
+]
+cxx_host = 'g++'
+
+src = Glob('*.cpp') + Glob('../../src/util.cpp')
+cpp_flags = ['-std=c++11', '-fPIC']
+link_flags = ['-std=c++11', '-fPIC']
+
+sharedlib  = SharedLibrary(
+    target = 'libdstengine.so',
+    source = src,
+    CXX = cxx_host,
+    CPPFLAGS = cpp_flags,
+    LIBPATH =  lib_path,
+    CPPPATH = inc_path,
+    LIBS =  libs,
+    LINKFLAGS = link_flags, 
+)
+
+#Install("./", sharedlib)
+
